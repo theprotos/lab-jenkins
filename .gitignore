@@ -1,0 +1,6 @@
+.idea
+site
+venv
+.vscode
+*.iml
+.vagrant*

@@ -1,0 +1,60 @@
+jenkins:
+  agentProtocols:
+    - "JNLP4-connect"
+    - "Ping"
+  disableRememberMe: false
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  numExecutors: 4
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: false
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+        - id: "admino"
+          password: "admino"
+  slaveAgentPort: 50000
+  systemMessage: "Hi from jenkins"
+  updateCenter:
+    sites:
+      - id: "default"
+        url: "https://updates.jenkins.io/update-center.json"
+  views:
+    - all:
+        name: "all"
+  viewsTabBar: "standard"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  downloadSettings:
+    useBrowser: false
+  sSHD:
+    port: -1
+unclassified:
+  gitSCM:
+    createAccountBasedOnEmail: false
+  location:
+    adminAddress: "vlcz@seznam.cz"
+    url: "http://0.0.0.0:50080/"
+  mailer:
+    adminAddress: "vlcz@seznam.cz"
+    charset: "UTF-8"
+    useSsl: false
+  pollSCM:
+    pollingThreadCount: 10
+tool:
+  git:
+    installations:
+      - home: "git"
+        name: "Default"
