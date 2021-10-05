@@ -4,9 +4,14 @@
 # vagrant rsync-auto
 
 VAGRANTFILE_API_VERSION = "2"
-HOSTNAME = "docker-env"
+HOSTNAME = "docker-jenkins"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+if Vagrant.has_plugin?("vagrant-vbguest")
+  config.vbguest.auto_update = false
+end
+
   config.vm.box = "centos/7"
   #config.vm.box = "alpine/alpine64"
   config.vm.hostname = HOSTNAME
@@ -22,9 +27,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
-  config.vm.network "forwarded_port", guest: 80, host: 50080
-  config.vm.network "forwarded_port", guest: 8080, host: 58080
-  config.vm.network "forwarded_port", guest: 443, host: 50443
+  # Web-GUI port
+  config.vm.network "forwarded_port", guest: 80, host: 40080
+  config.vm.network "forwarded_port", guest: 8080, host: 48080
+  config.vm.network "forwarded_port", guest: 443, host: 40443
 
   config.vm.provision "shell", inline: <<-SHELL
     yum update -y

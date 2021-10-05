@@ -1,5 +1,7 @@
 # cluster
 
+Vagrant used as VM facility, it is optional
+
 This folder contains the dockerized environment.
 
 ```
