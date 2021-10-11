@@ -12,11 +12,51 @@ jenkins:
   mode: NORMAL
   labelString: "thisissecuritylabelsforcontroller"
 
+  authorizationStrategy:
+    projectMatrix:
+      permissions:
+      - "Agent/Build:admin"
+      - "Agent/Configure:admin"
+      - "Agent/Connect:admin"
+      - "Agent/Create:admin"
+      - "Agent/Delete:admin"
+      - "Agent/Disconnect:admin"
+      - "Credentials/Create:admin"
+      - "Credentials/Delete:admin"
+      - "Credentials/ManageDomains:admin"
+      - "Credentials/Update:admin"
+      - "Credentials/View:admin"
+      - "Job/Build:admin"
+      - "Job/Cancel:admin"
+      - "Job/Configure:admin"
+      - "Job/Create:admin"
+      - "Job/Delete:admin"
+      - "Job/Discover:admin"
+      - "Job/Move:admin"
+      - "Job/Read:admin"
+      - "Job/Workspace:admin"
+      - "Lockable Resources/Reserve:admin"
+      - "Lockable Resources/Unlock:admin"
+      - "Lockable Resources/View:admin"
+      - "Overall/Administer:admin"
+      - "Overall/Read:admin"
+      - "Overall/Read:authenticated"
+      - "Run/Delete:admin"
+      - "Run/Delete:dev"
+      - "Run/Replay:admin"
+      - "Run/Replay:dev"
+      - "Run/Update:admin"
+      - "Run/Update:dev"
+      - "SCM/Tag:admin"
+      - "View/Configure:admin"
+      - "View/Create:admin"
+      - "View/Delete:admin"
+      - "View/Read:admin"
   nodes:
     - permanent:
-        labelString: "linux"
-        mode: NORMAL
         name: "agent1"
+        labelString: "linux agent1"
+        mode: NORMAL
         numExecutors: 4
         remoteFS: "/home/jenkins"
         launcher:
@@ -29,9 +69,9 @@ jenkins:
             retryWaitTime: 30
             sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
     - permanent:
-        labelString: "linux"
-        mode: NORMAL
         name: "agent2"
+        labelString: "linux agent2"
+        mode: NORMAL
         numExecutors: 4
         remoteFS: "/home/jenkins"
         launcher:
@@ -47,11 +87,18 @@ jenkins:
   securityRealm:
     local:
       allowsSignup: false
+      enableCaptcha: false
       users:
         - id: "admin"
           password: "admin"
         - id: "dev"
           password: "dev"
+        - id: "james"
+          password: "james"
+        - id: "diane"
+          password: "diane"
+        - id: "laura"
+          password: "laura"
 
   globalNodeProperties:
     - envVars:
@@ -59,18 +106,6 @@ jenkins:
           - key: FOO
             value: BAR
 
-  authorizationStrategy:
-    globalMatrix:
-      permissions:
-        - "Agent/Build:user"
-        - "Job/Build:user"
-        - "Job/Cancel:user"
-        - "Job/Read:user"
-        - "Overall/Read:user"
-        - "View/Read:user"
-        - "Overall/Read:anonymous"
-        - "Overall/Administer:admin"
-        - "Overall/Administer:root"
 
 credentials:
   system:
@@ -89,8 +124,9 @@ credentials:
             description: "Sample credentials of exampleuser"
             scope: GLOBAL
         - usernamePassword:
+            description: "vagrant-password"
             id: "vagrant-node-password"
-            password: "{AQAAABAAAAAQx64aJ3HgeCm3TcCeuYh24uQ5uj2GdUE08Sv22fNJDmk=}"
+            password: "vagrant"
             scope: GLOBAL
             username: "vagrant"
 
@@ -103,9 +139,12 @@ tool:
     installations:
       - home: /usr/lib/jvm/java-11-openjdk
         name: test-jdk
+  maven:
+    installations:
+      - home: "/usr/share/maven"
+        name: "maven"
 
 unclassified:
-
   location:
     adminAddress: vlcz@seznam.cz
     url: http://localhost:58080/
