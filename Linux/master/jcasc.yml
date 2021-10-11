@@ -106,7 +106,6 @@ jenkins:
           - key: FOO
             value: BAR
 
-
 credentials:
   system:
     domainCredentials:
@@ -129,6 +128,11 @@ credentials:
             password: "vagrant"
             scope: GLOBAL
             username: "vagrant"
+        - string:
+            description: "Github key"
+            id: "github-key"
+            scope: GLOBAL
+            secret: "{AQAAABAAAAAwaWLdmwBk0xm0AsA6jjtMCq5KpnzaaflhOkKZA+sbc7Jjpt+yKy1JNXlyU5om8p/sxzrCOG50KTpT5OYORf/oyg==}"
 
 tool:
   git:
@@ -143,6 +147,10 @@ tool:
     installations:
       - home: "/usr/share/maven"
         name: "maven"
+  gradle:
+     installations:
+       - name: "gradle"
+         home: "/opt/gradle/bin"
 
 unclassified:
   location:
@@ -153,5 +161,12 @@ unclassified:
     charset: UTF-8
     useSsl: false
     useTls: false
+
   pollSCM:
     pollingThreadCount: 10
+
+  gitHubPluginConfig:
+    configs:
+    - credentialsId: "github_key"
+      name: "github"
+      manageHooks: true

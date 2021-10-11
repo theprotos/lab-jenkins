@@ -12,7 +12,6 @@
   - 
 
 
-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
 
 
-
+https://github.com/theprotos/cicd-pipeline-train-schedule-jenkins.git
