@@ -16,7 +16,7 @@ mkdir -p /opt
 curl -sL $gradle_url -o gradle.zip
 unzip -q -o gradle.zip -d /opt
 rm -f gradle.zip
-mv gradle* gradle
+mv /opt/gradle* /opt/gradle
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Set /home/jenkins permissions"
 mkdir -p /home/jenkins/workspace

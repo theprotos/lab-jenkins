@@ -16,3 +16,5 @@ configuration-as-code:1.54
 #timestamper:1.13
 docker-plugin:1.2.3
 gradle:1.37.1
+copyartifact:1.46.2
+job-dsl:1.77

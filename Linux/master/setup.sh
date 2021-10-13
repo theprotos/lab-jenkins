@@ -25,7 +25,9 @@ pimt_url_alt='https://github.com/jenkinsci/plugin-installation-manager-tool/rele
 pimt_url=${pimt_url:-$pimt_url_alt}
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Copy Jenkins files"
+mkdir -p $JENKINS_HOME/init.groovy.d
 cp plugins.txt $JENKINS_HOME/
+cp *.groovy $JENKINS_HOME/init.groovy.d/
 mkdir -p $CASC_JENKINS_CONFIG && cp jcasc.yml $CASC_JENKINS_CONFIG/
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Install plugins via jenkins-plugin-manager \n$pimt_url"
