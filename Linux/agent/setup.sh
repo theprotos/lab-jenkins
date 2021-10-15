@@ -2,7 +2,7 @@
 
 gradle_url="https://services.gradle.org/distributions/gradle-7.2-bin.zip"
 
-echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: SSH enable password login"
+echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: SSH enable password login" && echo -e "\n\tSSH OK"
 sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
 systemctl reload sshd
 

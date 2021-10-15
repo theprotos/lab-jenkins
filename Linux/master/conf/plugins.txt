@@ -5,7 +5,7 @@ ssh-credentials:1.19
 scm-api:2.6.5
 junit:1.53
 matrix-project:1.19
-git:4.8.2
+git
 matrix-auth:2.6.8
 blueocean:1.25.0
 #cloudbees-folder:6.16
@@ -18,3 +18,4 @@ docker-plugin:1.2.3
 gradle:1.37.1
 copyartifact:1.46.2
 job-dsl:1.77
+promoted-builds

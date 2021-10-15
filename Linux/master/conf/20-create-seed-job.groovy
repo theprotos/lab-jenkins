@@ -1,5 +1,4 @@
 import hudson.plugins.git.*
-
 import jenkins.*
 import jenkins.model.*
 import hudson.*
@@ -11,17 +10,24 @@ import hudson.model.*
  * Create a simple seed job and execute a job dsl script to create a job
  */
 def jenkinsInstance = Jenkins.getInstance()
+def folder = jenkinsInstance.getItem("SeedJobs")
 def jobName = "SimpleSeedJob"
-// jobDsl plugin uses a free style project in order to seed jobs, let's initialise it.
-def seedProject = new FreeStyleProject(jenkinsInstance, jobName);
-seedProject.save()
+println("\n=== Initialize the " + folder.name + "/" + jobName + " job\n")
+if(jenkinsInstance.getItemByFullName("/" + folder.name + "/" + jobName) != null){
+    println(jobName + " job has been already initialized, skipping the step")
+    return
+}
 
-def jobDslBuildStep = new ExecuteDslScripts()
+// jobDsl plugin uses a free style project in order to seed jobs, let's initialise it.
+def seedProject = folder.createProject(FreeStyleProject, jobName)
+def jobDslBuildTrigger = new hudson.triggers.TimerTrigger("H/20 * * * *");
+def jobDslBuildStep = new ExecuteDslScripts();
 jobDslBuildStep.with {
-    ignoreExisting = true
+    ignoreExisting = false
     lookupStrategy = LookupStrategy.JENKINS_ROOT
     removedJobAction = RemovedJobAction.DELETE
     removedViewAction = RemovedViewAction.DELETE
+    removedConfigFilesAction = RemovedConfigFilesAction.DELETE
     useScriptText = true
     scriptText = "job('DSL-Tutorial-1-Test') {\n" +
             "    scm {\n" +
@@ -39,37 +45,9 @@ jobDslBuildStep.with {
             "}"
 }
 seedProject.getBuildersList().add(jobDslBuildStep)
-
-
-/**
- * Advanced job creation
- */
-
-def jobScriptsRepository = "https://github.com/theprotos/lab-jenkins.git"
-def branch = "*/development"
-def jobsScriptFile = "job-dsl/*.jobdsl"
-def scm = new GitSCM(GitSCM.createRepoList(jobScriptsRepository, ""), [new BranchSpec(branch)], false, [], null, null, [])
-
-def advancedJobName = "AdvancedSeedJob"
-def advancedSeedProject = new FreeStyleProject(jenkinsInstance, advancedJobName)
-advancedSeedProject.scm = scm
-advancedSeedProject.save()
-
-def advancedJobDslBuildStep = new ExecuteDslScripts()
-advancedJobDslBuildStep.with {
-    ignoreExisting = true
-    lookupStrategy = LookupStrategy.JENKINS_ROOT
-    removedJobAction = RemovedJobAction.DELETE
-    removedViewAction = RemovedViewAction.DELETE
-    scriptText = ""
-    useScriptText = false
-    //create jobs using the scripts in a remote repository
-    targets = jobsScriptFile
-}
-advancedSeedProject.getBuildersList().add(advancedJobDslBuildStep)
+seedProject.addTrigger(jobDslBuildTrigger)
 
 jenkinsInstance.reload()
-
 
 // Start
 jenkinsInstance.queue.schedule(
@@ -81,15 +59,4 @@ jenkinsInstance.queue.schedule(
                 }
             }
         )
-)
-
-jenkinsInstance.queue.schedule(
-        jenkinsInstance.getJob(advancedJobName), 0, new CauseAction(
-        new Cause() {
-            @Override
-            String getShortDescription() {
-                'Jenkins startup script'
-            }
-        }
-)
 )
