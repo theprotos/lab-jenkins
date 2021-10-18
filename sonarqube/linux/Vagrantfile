@@ -1,0 +1,72 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Run from cli to have files sync:
+# vagrant rsync-auto
+
+VAGRANTFILE_API_VERSION = "2"
+HOSTNAME = "docker-env"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+if Vagrant.has_plugin?("vagrant-vbguest")
+  config.vbguest.auto_update = false
+end
+
+  config.vm.define "master" do |master|
+    master.vm.box = "centos/7"
+    #master.vm.box = "alpine/alpine64"
+    master.vm.hostname = "master"
+    master.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      #vb.name = HOSTNAME
+      vb.memory = 1024
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "docker environment"]
+    end
+
+    master.vm.network "private_network", ip: "192.168.200.100"
+    master.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
+    # Main port
+    master.vm.network "forwarded_port", guest: 9000, host: 9000
+    master.vm.provision "shell", inline: <<-SHELL
+      cd /vagrant/master
+      chmod +x *.sh
+      sh setup.sh
+    SHELL
+  end
+
+  config.vm.define "postgresql" do |postgresql|
+    postgresql.vm.box = "centos/7"
+    #postgresql.vm.box = "alpine/alpine64"
+    postgresql.vm.hostname = "postgresql"
+    postgresql.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      #vb.name = HOSTNAME
+      vb.memory = 1024
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "docker environment"]
+    end
+
+    postgresql.vm.network "private_network", ip: "192.168.200.101"
+    postgresql.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
+    # Main port
+    postgresql.vm.network "forwarded_port", guest: 5432, host: 5432
+    postgresql.vm.provision "shell", inline: <<-SHELL
+      cd /vagrant/postgresql
+      chmod +x *.sh
+      sh setup.sh
+    SHELL
+  end
+
+#  config.vm.provision "ansible" do |ansible|
+#    ansible.compatibility_mode = "2.0"
+#    ansible.playbook = "provisioning/main.yml"
+#  end
+
+end
+

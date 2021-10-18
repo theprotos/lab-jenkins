@@ -1,9 +1,8 @@
-import hudson.plugins.git.*
-import jenkins.*
-import jenkins.model.*
-import hudson.*
-import javaposse.jobdsl.plugin.*
-import hudson.model.*
+import hudson.model.CauseAction
+import hudson.model.Cause
+import jenkins.model.Jenkins
+import javaposse.jobdsl.plugin.ExecuteDslScripts
+import com.cloudbees.hudson.plugins.folder.Folder
 
 /**
  * Api documentation for job dsl https://jenkins.io/doc/pipeline/steps/job-dsl/
@@ -13,7 +12,7 @@ def jenkinsInstance = Jenkins.getInstance()
 def folder = jenkinsInstance.getItem("SeedJobs")
 def jobName = "SimpleSeedJob"
 println("\n=== Initialize the " + folder.name + "/" + jobName + " job\n")
-if(jenkinsInstance.getItemByFullName("/" + folder.name + "/" + jobName) != null){
+if(jenkinsInstance.getItemByFullName(folder.name + "/" + jobName) != null){
     println(jobName + " job has been already initialized, skipping the step")
     return
 }
@@ -38,7 +37,7 @@ jobDslBuildStep.with {
             "    }\n" +
             "    steps {\n" +
             "       maven{" +
-            "              mavenInstallation('maven3')\n" +
+            "              mavenInstallation('maven')\n" +
             "              goals('clean install')\n" +
             "        }" +
             "    }\n" +

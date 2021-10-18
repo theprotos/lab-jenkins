@@ -1,12 +1,12 @@
 #!/usr/bin/bash
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: SSH enable password login"
-sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config && echo -e "\n\tSSH OK"
+sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config && echo -e "\n\tSSH [ OK ]"
 systemctl reload sshd
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Add jenkins LTS repo"
 curl -sL https://pkg.jenkins.io/redhat-stable/jenkins.repo -o /etc/yum.repos.d/jenkins.repo
-rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key && echo -e "\n\tRepo OK"
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key && echo -e "\n\tRepo [ OK ]"
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Install additional packages"
 yum install -y -q epel-release yum-utils net-tools java-11-openjdk java-11-openjdk-devel lsof unzip git
@@ -25,7 +25,7 @@ pimt_url_alt='https://github.com/jenkinsci/plugin-installation-manager-tool/rele
 pimt_url=${pimt_url:-$pimt_url_alt}
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Copy Jenkins files"
-mkdir -p $JENKINS_HOME/plugins && cp conf/plugins.txt $JENKINS_HOME/plugins && echo -e "\n\tPlugins OK"
+mkdir -p $JENKINS_HOME/plugins && cp conf/plugins.txt $JENKINS_HOME/plugins && echo -e "\n\tPlugins [ OK ]"
 mkdir -p $JENKINS_HOME/init.groovy.d && cp conf/*.groovy $JENKINS_HOME/init.groovy.d/ && echo -e "\n\tinit.groovy.d OK"
 mkdir -p $CASC_JENKINS_CONFIG && cp conf/jcasc.yml $CASC_JENKINS_CONFIG/ && echo -e "\n\tJCaSC OK"
 

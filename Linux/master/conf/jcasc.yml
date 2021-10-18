@@ -142,7 +142,7 @@ tool:
   jdk:
     installations:
       - home: /usr/lib/jvm/java-11-openjdk
-        name: test-jdk
+        name: jdk
   maven:
     installations:
       - home: "/usr/share/maven"

@@ -18,7 +18,7 @@ def jobsScriptFile = "job-dsl/*.jobdsl"
 def scm = new GitSCM(GitSCM.createRepoList(jobScriptsRepository, ""), [new BranchSpec(branch)], false, [], null, null, [])
 def advancedJobName = "AdvancedSeedJob"
 println("\n=== Initialize the " + folder.name + "/" + advancedJobName + " job\n")
-if(jenkinsInstance.getItem(folder.name + "/" + advancedJobName) != null){
+if(jenkinsInstance.getItemByFullName(folder.name + "/" + advancedJobName) != null){
     println(advancedJobName + " job has been already initialized, skipping the step")
     return
 }

@@ -16,4 +16,6 @@
 
 https://github.com/theprotos/cicd-pipeline-train-schedule-jenkins.git
 
+## Refs
+https://www.youtube.com/c/CloudBeesTV/videos
 https://javadoc.jenkins.io/index-all.html
