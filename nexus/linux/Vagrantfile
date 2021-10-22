@@ -1,0 +1,47 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Run from cli to have files sync:
+# vagrant rsync-auto
+
+VAGRANTFILE_API_VERSION = "2"
+HOSTNAME = "docker-env"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+if Vagrant.has_plugin?("vagrant-vbguest")
+  config.vbguest.auto_update = false
+end
+
+  config.vm.define "nexus" do |nexus|
+    nexus.vm.box = "centos/7"
+    #nexus.vm.box = "alpine/alpine64"
+    nexus.vm.hostname = "nexus"
+    nexus.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      #vb.name = HOSTNAME
+      vb.memory = 1024
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "docker environment"]
+    end
+
+    nexus.vm.network "private_network", ip: "192.168.200.110"
+    nexus.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
+    # Main port
+    nexus.vm.network "forwarded_port", guest: 9000, host: 9000
+    nexus.vm.provision "shell", inline: <<-SHELL
+      cd /vagrant/nexus
+      chmod +x *.sh
+      sh setup.sh
+    SHELL
+  end
+
+#  config.vm.provision "ansible" do |ansible|
+#    ansible.compatibility_mode = "2.0"
+#    ansible.playbook = "provisioning/main.yml"
+#  end
+
+end
+

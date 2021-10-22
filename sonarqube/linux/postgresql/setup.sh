@@ -10,16 +10,23 @@ yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_6
 yum install -y postgresql11-server
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Create DB"
-/usr/pgsql-11/bin/postgresql-11-setup initdb && echo -e "\n\initdb OK"
+/usr/pgsql-11/bin/postgresql-11-setup initdb && echo -e "\ninitdb OK"
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Start Postgre"
-sudo systemctl start postgresql-11
-sudo systemctl enable postgresql-11
+systemctl restart postgresql-11
+systemctl enable postgresql-11
+
+sed -i\
+ -e "s/^#listen_addresses =.*/listen_addresses = '*'/" \
+ -e "s/^#port =.*/port = 5432/" \
+/var/lib/pgsql/11/data/postgresql.conf && echo -e "\tListen address/port Config OK"
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Create db, user"
-postgres
-create database sonarqubedb
-create user sonaruser with encrypted password 'sonarpassword';
-grant all privileges on database sonarqubedb to sonaruser;
-\q
+sudo -u postgres psql -c 'create database sonarqubedb;'
+sudo -u postgres psql -c "create user sonaruser with encrypted password 'sonarpassword';"
+sudo -u postgres psql -c 'grant all privileges on database sonarqubedb to sonaruser;'
 
+systemctl restart postgresql-11
+
+#sudo -u postgres psql -c 'SHOW config_file'
+#

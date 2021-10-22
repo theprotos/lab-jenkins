@@ -14,8 +14,9 @@ workflow-aggregator:2.6
 configuration-as-code:1.54
 #workflow-aggregator:2.6
 #timestamper:1.13
-docker-plugin:1.2.3
+docker-plugin
 gradle:1.37.1
 copyartifact:1.46.2
 job-dsl:1.77
 promoted-builds
+#nexus-jenkins-plugin
