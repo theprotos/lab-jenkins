@@ -52,8 +52,13 @@ sed -i\
  -e 's/^wrapper.java.command=.*/wrapper.java.command=java/' \
 $SONARQUBE_HOME/conf/wrapper.conf && echo -e "\tWEB Config OK"
 
-echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Start SONAR\n"
-su sonar -c '/opt/sonarqube/bin/linux-x86-64/sonar.sh restart'
+echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Start SONAR and wait 30 sec\n"
+#su sonar -c '/opt/sonarqube/bin/linux-x86-64/sonar.sh restart'
+sudo -u sonar /opt/sonarqube/bin/linux-x86-64/sonar.sh restart && \
+sleep 30 && echo -e "\tWEB Config OK"
 
+echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Create users\n"
+curl -X POST -v -u admin:admin "http://localhost:9000/api/users/change_password?login=admin&password=admin1&previousPassword=admin"
+curl -X POST -v -u admin:admin1 "http://localhost:9000/api/users/create?login=dev&password=dev&name=developer&email=myname@email.com"
 
 #psql -h 192.168.100.101 -p 5432 -U sonaruser -d sonarqubedb -W sonarpassword

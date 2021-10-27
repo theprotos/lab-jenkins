@@ -6,6 +6,7 @@ job('example') {
     }
     triggers {
         githubPush()
+        cron("*/5 * * * *")
     }
     steps {
         gradle('clean build')

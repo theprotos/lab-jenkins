@@ -22,4 +22,4 @@ usermod -L -a -G nexus nexus &&\
 chown -R nexus:nexus ${NEXUS_HOME} &&\
 echo -e "\tPermissions [ OK ]"
 
-su nexus -c '/opt/nexus/bin/nexus restart'
+su nexus -c '/opt/nexus/nexus/bin/nexus restart'

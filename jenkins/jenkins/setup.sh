@@ -24,10 +24,10 @@ pimt_url=`curl -sL https://api.github.com/repos/jenkinsci/plugin-installation-ma
 pimt_url_alt='https://github.com/jenkinsci/plugin-installation-manager-tool/releases/download/2.11.0/jenkins-plugin-manager-2.11.0.jar'
 pimt_url=${pimt_url:-$pimt_url_alt}
 
-echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Copy Jenkins files"
-mkdir -p $JENKINS_HOME/plugins && cp conf/plugins.txt $JENKINS_HOME/plugins && echo -e "\n\tPlugins [ OK ]"
-mkdir -p $JENKINS_HOME/init.groovy.d && cp conf/*.groovy $JENKINS_HOME/init.groovy.d/ && echo -e "\n\tinit.groovy.d OK"
-mkdir -p $CASC_JENKINS_CONFIG && cp conf/jcasc.yml $CASC_JENKINS_CONFIG/ && echo -e "\n\tJCaSC OK"
+echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Copy Jenkins files\n"
+mkdir -p $JENKINS_HOME/plugins && cp conf/plugins.txt $JENKINS_HOME/plugins && echo -e "\tPlugins [ OK ]"
+mkdir -p $JENKINS_HOME/init.groovy.d && cp conf/*.groovy $JENKINS_HOME/init.groovy.d/ && echo -e "\tinit.groovy.d [OK]"
+mkdir -p $CASC_JENKINS_CONFIG && cp conf/jcasc.yml $CASC_JENKINS_CONFIG/ && echo -e "\tJCaSC [OK]"
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Install plugins via jenkins-plugin-manager \n$pimt_url"
 curl -sL $pimt_url -o $JENKINS_HOME/jenkins-plugin-manager.jar

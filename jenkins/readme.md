@@ -1,6 +1,6 @@
 ## Install jenkins on CentOS (no docker)
 
-- [setup.sh](master/setup.sh)
+- [setup.sh](jenkins/setup.sh)
   - config sshd
   - Add LTS Jenkins repo
   - Install Jenkins
