@@ -4,7 +4,11 @@ import hudson.model.Cause
 import jenkins.model.Jenkins
 import hudson.model.FreeStyleProject
 import javaposse.jobdsl.plugin.ExecuteDslScripts
-import javaposse.jobdsl.plugin.*
+import javaposse.jobdsl.plugin.LookupStrategy
+import javaposse.jobdsl.plugin.RemovedJobAction
+import javaposse.jobdsl.plugin.RemovedViewAction
+import javaposse.jobdsl.plugin.RemovedConfigFilesAction
+import hudson.model.labels.LabelAtom;
 
 def now = new Date()
 def jenkinsInstance = Jenkins.getInstance()
@@ -45,7 +49,8 @@ jobDslBuildStep.with {
 seedProject.setDescription("\n Job created at " + now.format("dd.MM.YYYY-HH:mm:ss"))
 seedProject.getBuildersList().add(jobDslBuildStep)
 seedProject.addTrigger(jobDslBuildTrigger)
-jenkinsInstance.reload()
+seedProject.setAssignedLabel(new LabelAtom("linux"))
+//jenkinsInstance.reload()
 
 // Start
 def job = jenkinsInstance.getItemByFullName(folder.name + "/" + jobName)

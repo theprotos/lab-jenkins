@@ -1,13 +1,13 @@
 script-security:1.78
 mailer:1.34
-credentials:2.6.1
+credentials
 ssh-credentials:1.19
 scm-api:2.6.5
 junit:1.53
 matrix-project:1.19
 git
 matrix-auth:2.6.8
-blueocean:1.25.0
+blueocean
 #cloudbees-folder:6.16
 workflow-aggregator:2.6
 #workflow-multibranch:2.26
@@ -15,8 +15,11 @@ configuration-as-code:1.54
 #workflow-aggregator:2.6
 #timestamper:1.13
 docker-plugin
-gradle:1.37.1
-copyartifact:1.46.2
-job-dsl:1.77
+gradle
+copyartifact
+job-dsl
 promoted-builds
 #nexus-jenkins-plugin
+docker-workflow
+# SSH agents
+ssh-slaves

@@ -1,12 +1,15 @@
-version: '3'
+version: '3.8'
 
 services:
 
-  node1:
+  jenkins:
     build: ./jenkins
     image: myjenkins
+    container_name: jenkins
+    deploy:
+      replicas: 1
     ports:
-      - '80:8080'
+      - '8080:8080'
       - '443:8443'
       - '50000:50000'
     volumes:
@@ -15,11 +18,28 @@ services:
       MY_VAR: myvar
     #restart: always
 
-  agent:
-    build: ./centos-agent
-    image: myjenkins
+  agent-jnlp:
+    build: ./agent-jnlp
+    image: myagent-jnlp
+    container_name: agent-jnlp
+    deploy:
+      replicas: 0
     ports:
-      - '22:8022'
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      MY_VAR: myvar
+    #restart: always
+
+  agent-ssh:
+    build: ./agent-ssh
+    image: myagent-ssh
+    container_name: agent-ssh
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
     volumes:
       - /var/jenkins_home
     environment:

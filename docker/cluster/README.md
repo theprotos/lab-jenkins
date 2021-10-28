@@ -14,3 +14,9 @@ This folder contains the dockerized environment.
 # Start a shell in node of the Jenkins facility 
 ./node1-shell.sh [node_name]
 ```
+
+docker exec -it jenkins bash
+
+
+
+https://plugins.jenkins.io/docker-plugin/

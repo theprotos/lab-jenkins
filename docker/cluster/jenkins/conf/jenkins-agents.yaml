@@ -1,0 +1,51 @@
+jenkins:
+
+  agentProtocols:
+    - "JNLP4-connect"
+    - "Ping"
+  slaveAgentPort: 50000
+
+  clouds:
+  - docker:
+      containerCap: 10
+      dockerApi:
+        connectTimeout: 60
+        dockerHost:
+          uri: "tcp://192.168.1.200:4243"
+        readTimeout: 60
+      exposeDockerHost: true
+      name: "docker"
+      templates:
+      - connector:
+          jnlp:
+            jenkinsUrl: "http://192.168.1.200:8080"
+            jnlpLauncher:
+              workDirSettings:
+                disabled: false
+                failIfWorkDirIsMissing: false
+                internalDir: "remoting"
+        dockerTemplateBase:
+          cpuPeriod: 0
+          cpuQuota: 0
+          image: "myagent-jnlp"
+        instanceCapStr: "5"
+        labelString: "linux doker jnlp"
+        name: "jnlp-agent"
+        pullStrategy: PULL_ALWAYS
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"
+      - connector:
+          ssh:
+            sshKeyStrategy:
+              injectSSHKey:
+                user: "root"
+        dockerTemplateBase:
+          cpuPeriod: 0
+          cpuQuota: 0
+          image: "myagent-ssh"
+        instanceCapStr: "5"
+        labelString: "linux maven docker ssh"
+        name: "ssh-agent"
+        pullStrategy: PULL_ALWAYS
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"

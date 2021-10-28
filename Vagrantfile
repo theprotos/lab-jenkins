@@ -13,6 +13,56 @@ if Vagrant.has_plugin?("vagrant-vbguest")
   config.vbguest.auto_update = false
 end
 
+  config.vm.define "agent1" do |agent1|
+    agent1.vm.box = "centos/7"
+    #agent1.vm.box = "alpine/alpine64"
+    agent1.vm.hostname = "agent1"
+    agent1.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      #vb.name = HOSTNAME
+      vb.memory = 512
+      vb.cpus = 1
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "jenkins agent"]
+    end
+
+    agent1.vm.network "private_network", ip: "192.168.200.201"
+    agent1.vm.synced_folder "jenkins/agent", "/vagrant", type: "rsync", create: "true"
+    agent1.vm.network "forwarded_port", guest: 22, host: 40022
+
+    agent1.vm.provision "shell", inline: <<-SHELL
+      cd /vagrant
+      chmod +x *.sh
+      sh setup.sh
+    SHELL
+  end
+
+  config.vm.define "agent2" do |agent2|
+    agent2.vm.box = "centos/7"
+    #agent2.vm.box = "alpine/alpine64"
+    agent2.vm.hostname = "agent2"
+    agent2.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      #vb.name = HOSTNAME
+      vb.memory = 512
+      vb.cpus = 1
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "Jenkins agent"]
+    end
+
+    agent2.vm.network "private_network", ip: "192.168.200.202"
+    agent2.vm.synced_folder "jenkins/agent", "/vagrant", type: "rsync", create: "true"
+    agent2.vm.network "forwarded_port", guest: 22, host: 30022
+
+    agent2.vm.provision "shell", inline: <<-SHELL
+      cd /vagrant
+      chmod +x *.sh
+      sh setup.sh
+    SHELL
+  end
+
   config.vm.define "jenkins" do |jenkins|
     jenkins.vm.box = "centos/7"
     #jenkins.vm.box = "alpine/alpine64"
@@ -41,57 +91,6 @@ end
       sh setup.sh
     SHELL
 
-  end
-
-  config.vm.define "agent1" do |agent1|
-    agent1.vm.box = "centos/7"
-    #agent1.vm.box = "alpine/alpine64"
-    agent1.vm.hostname = "agent1"
-    agent1.vm.provider :virtualbox do |vb|
-      #vb.gui = true
-      #vb.name = HOSTNAME
-      vb.memory = 512
-      vb.cpus = 1
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      vb.customize ["modifyvm", :id, "--ioapic", "on"]
-      vb.customize ["modifyvm", :id, "--description", "jenkins agent"]
-    end
-
-    agent1.vm.network "private_network", ip: "192.168.200.201"
-    agent1.vm.synced_folder "jenkins/agent", "/vagrant", type: "rsync", create: "true"
-    agent1.vm.network "forwarded_port", guest: 22, host: 40022
-
-    agent1.vm.provision "shell", inline: <<-SHELL
-      cd /vagrant
-      chmod +x *.sh
-      sh setup.sh
-    SHELL
-
-  end
-
-  config.vm.define "agent2" do |agent2|
-    agent2.vm.box = "centos/7"
-    #agent2.vm.box = "alpine/alpine64"
-    agent2.vm.hostname = "agent2"
-    agent2.vm.provider :virtualbox do |vb|
-      #vb.gui = true
-      #vb.name = HOSTNAME
-      vb.memory = 512
-      vb.cpus = 1
-      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      vb.customize ["modifyvm", :id, "--ioapic", "on"]
-      vb.customize ["modifyvm", :id, "--description", "Jenkins agent"]
-    end
-
-    agent2.vm.network "private_network", ip: "192.168.200.202"
-    agent2.vm.synced_folder "jenkins/agent", "/vagrant", type: "rsync", create: "true"
-    agent2.vm.network "forwarded_port", guest: 22, host: 30022
-
-    agent2.vm.provision "shell", inline: <<-SHELL
-      cd /vagrant
-      chmod +x *.sh
-      sh setup.sh
-    SHELL
   end
 
   config.vm.define "postgresql" do |postgresql|

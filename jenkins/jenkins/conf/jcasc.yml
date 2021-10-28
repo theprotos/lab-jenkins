@@ -65,7 +65,7 @@ jenkins:
             host: "192.168.200.201"
             port: 22
             credentialsId: vagrant-node-password
-            launchTimeoutSeconds: 60
+            launchTimeoutSeconds: 180
             maxNumRetries: 30
             retryWaitTime: 60
             sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
@@ -80,7 +80,7 @@ jenkins:
             host: "192.168.200.202"
             port: 22
             credentialsId: vagrant-node-password
-            launchTimeoutSeconds: 60
+            launchTimeoutSeconds: 180
             maxNumRetries: 30
             retryWaitTime: 60
             sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"

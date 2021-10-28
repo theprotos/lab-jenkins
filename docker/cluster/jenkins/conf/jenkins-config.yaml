@@ -53,37 +53,6 @@ jenkins:
       - "View/Create:admin"
       - "View/Delete:admin"
       - "View/Read:admin"
-  nodes:
-    - permanent:
-        name: "agent1"
-        labelString: "linux agent1"
-        mode: NORMAL
-        numExecutors: 4
-        remoteFS: "/home/jenkins"
-        launcher:
-          ssh:
-            host: "192.168.200.201"
-            port: 22
-            credentialsId: vagrant-node-password
-            launchTimeoutSeconds: 60
-            maxNumRetries: 30
-            retryWaitTime: 30
-            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
-    - permanent:
-        name: "agent2"
-        labelString: "linux agent2"
-        mode: NORMAL
-        numExecutors: 4
-        remoteFS: "/home/jenkins"
-        launcher:
-          ssh:
-            host: "192.168.200.202"
-            port: 22
-            credentialsId: vagrant-node-password
-            launchTimeoutSeconds: 60
-            maxNumRetries: 30
-            retryWaitTime: 30
-            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
 
   securityRealm:
     local:
@@ -156,7 +125,7 @@ tool:
 unclassified:
   location:
     adminAddress: vlcz@seznam.cz
-    url: http://localhost:58080/
+    url: http://192.168.1.200:8080/
 
   mailer:
     charset: UTF-8
@@ -171,3 +140,7 @@ unclassified:
     - credentialsId: "github_key"
       name: "github"
       manageHooks: true
+
+security:
+  globaljobdslsecurityconfiguration:
+    useScriptSecurity: false

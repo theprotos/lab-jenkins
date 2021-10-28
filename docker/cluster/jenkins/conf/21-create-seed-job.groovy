@@ -6,7 +6,11 @@ import hudson.plugins.git.BranchSpec
 import jenkins.model.Jenkins
 import hudson.model.FreeStyleProject
 import javaposse.jobdsl.plugin.ExecuteDslScripts
-import javaposse.jobdsl.plugin.*
+import javaposse.jobdsl.plugin.LookupStrategy
+import javaposse.jobdsl.plugin.RemovedJobAction
+import javaposse.jobdsl.plugin.RemovedViewAction
+import javaposse.jobdsl.plugin.RemovedConfigFilesAction
+import hudson.model.labels.LabelAtom;
 
 def jenkinsInstance = Jenkins.getInstance()
 def folder = jenkinsInstance.getItem("SeedJobs")
@@ -43,8 +47,8 @@ advancedJobDslBuildStep.with {
 advancedSeedProject.setDescription("\n Job created at " + now.format("dd.MM.YYYY-HH:mm:ss"))
 advancedSeedProject.getBuildersList().add(advancedJobDslBuildStep)
 advancedSeedProject.addTrigger(jobDslBuildTrigger)
-jenkinsInstance.reload()
-
+advancedSeedProject.setAssignedLabel(new LabelAtom("linux"))
+//jenkinsInstance.reload()
 
 // Start
 def job = jenkinsInstance.getItemByFullName(folder.name + "/" + advancedJobName)

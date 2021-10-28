@@ -12,14 +12,14 @@ if Vagrant.has_plugin?("vagrant-vbguest")
   config.vbguest.auto_update = false
 end
 
+  #config.vm.define "dockerhost" do |dockerhost|
   config.vm.box = "centos/7"
   #config.vm.box = "alpine/alpine64"
   config.vm.hostname = HOSTNAME
-
   config.vm.provider :virtualbox do |vb|
     #vb.gui = true
     #vb.name = HOSTNAME
-    vb.memory = 1024
+    vb.memory = 2048
     vb.cpus = 2
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
@@ -27,27 +27,18 @@ end
   end
 
   config.vm.network "private_network", ip: "192.168.1.200"
-  config.vm.synced_folder "cluster", "/vagrant", type: "rsync", create: "true"
-  # Web-GUI port
-  config.vm.network "forwarded_port", guest: 80, host: 40080
+  config.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
+  # Docker API
+  config.vm.network "forwarded_port", guest: 4243, host: 4243
+  # jenkins
   config.vm.network "forwarded_port", guest: 8080, host: 48080
   config.vm.network "forwarded_port", guest: 443, host: 40443
 
   config.vm.provision "shell", inline: <<-SHELL
-    yum remove docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine
-    yum update -y -q
-    yum install -y -q epel-release
-    yum install -y -q yum-utils jq net-tools
-    yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-    yum install -y -q docker-ce docker-ce-cli containerd.io python3-pip
-    curl -sL "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)"\
-     -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose
-    systemctl enable docker
-    systemctl start docker
-    usermod -aG docker vagrant
-    cd /vagrant
-    chmod +x *.sh
-    sh 01-start-cluster.sh
+      cd /vagrant
+      chmod +x *.sh
+      ls -al
+      sh setup.sh
   SHELL
 
 #  config.vm.provision "ansible" do |ansible|
