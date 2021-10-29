@@ -19,6 +19,7 @@ jenkins:
       - connector:
           jnlp:
             jenkinsUrl: "http://192.168.1.200:8080"
+            user: jenkins
             jnlpLauncher:
               workDirSettings:
                 disabled: false
@@ -29,7 +30,7 @@ jenkins:
           cpuQuota: 0
           image: "192.168.1.200:5000/myagent-jnlp"
         instanceCapStr: "5"
-        labelString: "linux doker jnlp"
+        labelString: "linux doker jnlp jdk11"
         name: "jnlp-agent"
         pullStrategy: PULL_ALWAYS
         pullTimeout: 300
@@ -38,14 +39,19 @@ jenkins:
           ssh:
             sshKeyStrategy:
               injectSSHKey:
-                user: "root"
+                user: "jenkins"
         dockerTemplateBase:
           cpuPeriod: 0
           cpuQuota: 0
           image: "192.168.1.200:5000/myagent-ssh"
         instanceCapStr: "5"
-        labelString: "linux maven docker ssh"
+        labelString: "linux maven docker ssh jdk8"
         name: "ssh-agent"
         pullStrategy: PULL_ALWAYS
         pullTimeout: 300
         remoteFs: "/home/jenkins"
+        nodeProperties:
+          - envVars:
+              env:
+              - key: "JENKINS_AGENT_SSH_PUBKEY"
+                value: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEJpykWZv0JFqwfapv6TIpETY2C64BfoV4p8CjmEX4s8RJlBkyQYwWlzj8G1cts/A1JeppIrBPPtrROd6sTr4f1v8jgipVJta37wT68JhjZDMOViCxKApERgiDl94kiyidik3hbq9elFNjluhuWx/wrsX1uBuUWVdIv9x13DFeCEenAot4QnUYtg9wEg5VNe9v3E5BlOGFgEfGOg/xEeCOMohj8cKl+M3YX5vOYsJAyvS8CX6KQOZ3fQ3oRMdnQnzKJW4Tmtr7QEMNeiCfcNvKRHY77zdQYdOz7jW5NWbCHgayFDe8HqSP6BnZbiFsgJDqFRiNnGn3LnwYVvpvmqdr "

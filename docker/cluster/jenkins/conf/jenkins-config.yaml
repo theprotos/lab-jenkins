@@ -104,24 +104,6 @@ credentials:
             scope: GLOBAL
             secret: "{AQAAABAAAAAwaWLdmwBk0xm0AsA6jjtMCq5KpnzaaflhOkKZA+sbc7Jjpt+yKy1JNXlyU5om8p/sxzrCOG50KTpT5OYORf/oyg==}"
 
-tool:
-  git:
-    installations:
-      - name: git
-        home: /usr/bin/git
-  jdk:
-    installations:
-      - home: /usr/lib/jvm/java-11-openjdk
-        name: jdk
-  maven:
-    installations:
-      - home: "/usr/share/maven"
-        name: "maven"
-  gradle:
-     installations:
-       - name: "gradle"
-         home: "/opt/gradle/bin"
-
 unclassified:
   location:
     adminAddress: vlcz@seznam.cz
