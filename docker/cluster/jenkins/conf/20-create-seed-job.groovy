@@ -39,6 +39,9 @@ jobDslBuildStep.with {
             "        scm('H/15 * * * *')\n" +
             "    }\n" +
             "    steps {\n" +
+            "       shell('java -version')\n" +
+            "    }\n" +
+            "    steps {\n" +
             "       maven{\n" +
             "              mavenInstallation('maven')\n" +
             "              goals('clean install')\n" +

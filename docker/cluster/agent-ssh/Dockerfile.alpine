@@ -1,0 +1,3 @@
+FROM jenkins/ssh-agent:latest-alpine-jdk8
+USER root
+RUN apk update && apk add maven gradle npm

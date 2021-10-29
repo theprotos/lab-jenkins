@@ -22,6 +22,7 @@ end
     vb.memory = 2048
     vb.cpus = 2
     vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
     vb.customize ["modifyvm", :id, "--ioapic", "on"]
     vb.customize ["modifyvm", :id, "--description", "docker environment"]
   end
@@ -29,10 +30,10 @@ end
   config.vm.network "private_network", ip: "192.168.1.200"
   config.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
   # Docker API
-  config.vm.network "forwarded_port", guest: 4243, host: 4243
+  #config.vm.network "forwarded_port", guest: 4243, host: 4243
   # jenkins
-  config.vm.network "forwarded_port", guest: 8080, host: 48080
-  config.vm.network "forwarded_port", guest: 443, host: 40443
+  #config.vm.network "forwarded_port", guest: 8080, host: 48080
+  #config.vm.network "forwarded_port", guest: 443, host: 40443
 
   config.vm.provision "shell", inline: <<-SHELL
       cd /vagrant

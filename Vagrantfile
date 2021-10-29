@@ -23,6 +23,7 @@ end
       vb.memory = 512
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
       vb.customize ["modifyvm", :id, "--ioapic", "on"]
       vb.customize ["modifyvm", :id, "--description", "jenkins agent"]
     end
@@ -48,6 +49,7 @@ end
       vb.memory = 512
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
       vb.customize ["modifyvm", :id, "--ioapic", "on"]
       vb.customize ["modifyvm", :id, "--description", "Jenkins agent"]
     end
@@ -73,6 +75,7 @@ end
       vb.memory = 512
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
       vb.customize ["modifyvm", :id, "--ioapic", "on"]
       vb.customize ["modifyvm", :id, "--description", "jenkins master"]
     end
@@ -103,6 +106,7 @@ end
       vb.memory = 512
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
       vb.customize ["modifyvm", :id, "--ioapic", "on"]
       vb.customize ["modifyvm", :id, "--description", "Postgre SQL DB"]
     end
@@ -128,6 +132,7 @@ end
       vb.memory = 1024
       vb.cpus = 1
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
       vb.customize ["modifyvm", :id, "--ioapic", "on"]
       vb.customize ["modifyvm", :id, "--description", "SonarQube"]
     end

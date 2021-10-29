@@ -17,15 +17,15 @@ echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Install docker-compose"
 curl -sL "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)"\
  -o /usr/bin/docker-compose && chmod +x /usr/bin/docker-compose
 
-echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Enable Docker API"
+echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Enable Docker API, --insecure-registry"
 sed -i\
- -e 's/^ExecStart=.*/ExecStart=\/usr\/bin\/dockerd -H tcp:\/\/0.0.0.0:4243 -H unix:\/\/\/var\/run\/docker.sock/' \
+ -e 's/^ExecStart=.*/ExecStart=\/usr\/bin\/dockerd --dns 8.8.8.8 --insecure-registry 192.168.1.200:5000 --insecure-registry 0.0.0.0:5000 -H tcp:\/\/0.0.0.0:4243 -H unix:\/\/\/var\/run\/docker.sock/' \
 /lib/systemd/system/docker.service
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Enable docker"
 systemctl enable docker
 systemctl daemon-reload
-systemctl start docker
+systemctl restart docker
 usermod -aG docker vagrant
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Start compose"

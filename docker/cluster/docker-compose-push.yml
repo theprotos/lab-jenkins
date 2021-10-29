@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+
+  agent-jnlp:
+    build:
+      context: ./agent-jnlp
+      dockerfile: Dockerfile.alpine
+    image: 192.168.1.200:5000/myagent-jnlp
+    container_name: agent-jnlp
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      MY_VAR: myvar
+
+  agent-ssh:
+    build:
+      context: ./agent-ssh
+      dockerfile: Dockerfile.alpine
+    image: 192.168.1.200:5000/myagent-ssh
+    container_name: agent-ssh
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      MY_VAR: myvar

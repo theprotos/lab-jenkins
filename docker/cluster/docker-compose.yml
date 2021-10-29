@@ -3,7 +3,9 @@ version: '3.8'
 services:
 
   jenkins:
-    build: ./jenkins
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
     image: myjenkins
     container_name: jenkins
     deploy:
@@ -16,32 +18,15 @@ services:
       - /var/jenkins_home
     environment:
       MY_VAR: myvar
-    #restart: always
+    restart: always
+    depends_on:
+      - docker-registry
 
-  agent-jnlp:
-    build: ./agent-jnlp
-    image: myagent-jnlp
-    container_name: agent-jnlp
+  docker-registry:
+    image: registry:2
+    container_name: docker-registry
     deploy:
-      replicas: 0
+      replicas: 1
     ports:
-      - '8022:22'
-    volumes:
-      - /var/jenkins_home
-    environment:
-      MY_VAR: myvar
-    #restart: always
-
-  agent-ssh:
-    build: ./agent-ssh
-    image: myagent-ssh
-    container_name: agent-ssh
-    deploy:
-      replicas: 0
-    ports:
-      - '8022:22'
-    volumes:
-      - /var/jenkins_home
-    environment:
-      MY_VAR: myvar
-    #restart: always
+      - '5000:5000'
+    restart: always

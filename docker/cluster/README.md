@@ -20,3 +20,5 @@ docker exec -it jenkins bash
 
 
 https://plugins.jenkins.io/docker-plugin/
+
+curl -X GET http://0.0.0.0:5000/v2/_catalog

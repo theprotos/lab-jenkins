@@ -27,7 +27,7 @@ jenkins:
         dockerTemplateBase:
           cpuPeriod: 0
           cpuQuota: 0
-          image: "myagent-jnlp"
+          image: "192.168.1.200:5000/myagent-jnlp"
         instanceCapStr: "5"
         labelString: "linux doker jnlp"
         name: "jnlp-agent"
@@ -42,7 +42,7 @@ jenkins:
         dockerTemplateBase:
           cpuPeriod: 0
           cpuQuota: 0
-          image: "myagent-ssh"
+          image: "192.168.1.200:5000/myagent-ssh"
         instanceCapStr: "5"
         labelString: "linux maven docker ssh"
         name: "ssh-agent"
