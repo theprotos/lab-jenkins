@@ -1,7 +1,7 @@
-script-security:1.78
+script-security
 mailer:1.34
-credentials:2.6.1
-ssh-credentials:1.19
+credentials
+ssh-credentials
 scm-api:2.6.5
 junit:1.53
 matrix-project:1.19
@@ -15,7 +15,7 @@ configuration-as-code:1.54
 #workflow-aggregator:2.6
 #timestamper:1.13
 docker-plugin
-gradle:1.37.1
+gradle
 copyartifact
 job-dsl
 promoted-builds
@@ -23,3 +23,4 @@ promoted-builds
 docker-workflow
 # SSH agents
 ssh-slaves
+dashboard-view

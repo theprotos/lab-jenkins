@@ -14,7 +14,7 @@ if Vagrant.has_plugin?("vagrant-vbguest")
 end
 
   config.vm.define "agent1" do |agent1|
-    agent1.vm.box = "centos/7"
+    agent1.vm.box = "centos/stream8"
     #agent1.vm.box = "alpine/alpine64"
     agent1.vm.hostname = "agent1"
     agent1.vm.provider :virtualbox do |vb|
@@ -40,7 +40,7 @@ end
   end
 
   config.vm.define "agent2" do |agent2|
-    agent2.vm.box = "centos/7"
+    agent2.vm.box = "centos/stream8"
     #agent2.vm.box = "alpine/alpine64"
     agent2.vm.hostname = "agent2"
     agent2.vm.provider :virtualbox do |vb|
@@ -66,7 +66,7 @@ end
   end
 
   config.vm.define "jenkins" do |jenkins|
-    jenkins.vm.box = "centos/7"
+    jenkins.vm.box = "centos/stream8"
     #jenkins.vm.box = "alpine/alpine64"
     jenkins.vm.hostname = "jenkins"
     jenkins.vm.provider :virtualbox do |vb|
@@ -97,7 +97,7 @@ end
   end
 
   config.vm.define "postgresql" do |postgresql|
-    postgresql.vm.box = "centos/7"
+    postgresql.vm.box = "centos/stream8"
     #postgresql.vm.box = "alpine/alpine64"
     postgresql.vm.hostname = "postgresql"
     postgresql.vm.provider :virtualbox do |vb|
@@ -123,7 +123,7 @@ end
   end
 
   config.vm.define "sonar" do |sonar|
-    sonar.vm.box = "centos/7"
+    sonar.vm.box = "centos/stream8"
     #sonar.vm.box = "alpine/alpine64"
     sonar.vm.hostname = "sonar"
     sonar.vm.provider :virtualbox do |vb|
@@ -149,7 +149,7 @@ end
   end
 
   config.vm.define "nexus" do |nexus|
-    nexus.vm.box = "centos/7"
+    nexus.vm.box = "centos/stream8"
     #nexus.vm.box = "alpine/alpine64"
     nexus.vm.hostname = "nexus"
     nexus.vm.provider :virtualbox do |vb|

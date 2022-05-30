@@ -18,6 +18,10 @@ Users
 - diane:diane
 - laura:laura
 
+Build tools
+- maven
+- gradle
+
 ## SonarQube
 
 Users:

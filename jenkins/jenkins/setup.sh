@@ -9,8 +9,9 @@ curl -sL https://pkg.jenkins.io/redhat-stable/jenkins.repo -o /etc/yum.repos.d/j
 rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key && echo -e "\n\tRepo [ OK ]"
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Install additional packages"
-yum install -y -q epel-release yum-utils net-tools java-11-openjdk java-11-openjdk-devel lsof unzip git
+yum install -y -q epel-release
 yum update -y -q
+yum install -y -q yum-utils net-tools java-11-openjdk java-11-openjdk-devel lsof unzip git
 
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Install Jenkins"
 yum install -y -q jenkins jq
