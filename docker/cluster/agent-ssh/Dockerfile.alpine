@@ -1,4 +1,6 @@
 FROM jenkins/ssh-agent:latest-alpine-jdk8
 USER root
-RUN apk update &&\
-    apk add maven gradle npm git
+RUN apk -q update &&\
+    apk -q add maven gradle npm git &&\
+    sed -i 's/[#]?ClientAliveInterval.*/ClientAliveInterval 1200/' /etc/ssh/sshd_config &&\
+    sed -i 's/[#]?ClientAliveCountMax.*/ClientAliveCountMax 3/' /etc/ssh/sshd_config

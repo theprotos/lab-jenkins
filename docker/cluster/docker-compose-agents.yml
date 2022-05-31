@@ -2,12 +2,27 @@ version: '3.8'
 
 services:
 
-  agent-jnlp:
+  agent-jnlp-jdk8:
     build:
       context: ./agent-jnlp
       dockerfile: Dockerfile.alpine
-    image: 192.168.1.200:5000/myagent-jnlp
-    container_name: agent-jnlp
+    image: 192.168.1.200:5000/jnlp-linux-jdk8
+    container_name: agent-jnlp-jdk8
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      MY_VAR: myvar
+
+  agent-jnlp-jdk11:
+    build:
+      context: ./agent-jnlp
+      dockerfile: Dockerfile.ubuntu
+    image: 192.168.1.200:5000/jnlp-linux-jdk11
+    container_name: agent-jnlp-jdk11
     deploy:
       replicas: 0
     ports:

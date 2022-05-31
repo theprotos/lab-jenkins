@@ -1,5 +1,9 @@
 #!/usr/bin/bash
 
+echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: SSH enable password login"
+sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config && echo -e "\tSSH [ OK ]"
+systemctl reload sshd
+
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Remove old docker"
 
 yum remove -q docker docker-client docker-client-latest docker-common docker-latest docker-latest-logrotate docker-logrotate docker-engine

@@ -4,7 +4,7 @@
 # vagrant rsync-auto
 
 VAGRANTFILE_API_VERSION = "2"
-HOSTNAME = "docker-jenkins"
+HOST_NAME = "docker-jenkins"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -12,37 +12,41 @@ if Vagrant.has_plugin?("vagrant-vbguest")
   config.vbguest.auto_update = false
 end
 
-  #config.vm.define "dockerhost" do |dockerhost|
-  config.vm.box = "centos/7"
-  #config.vm.box = "alpine/alpine64"
-  config.vm.hostname = HOSTNAME
-  config.vm.provider :virtualbox do |vb|
-    #vb.gui = true
-    #vb.name = HOSTNAME
-    vb.memory = 2048
-    vb.cpus = 2
-    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-    vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
-    vb.customize ["modifyvm", :id, "--ioapic", "on"]
-    vb.customize ["modifyvm", :id, "--description", "docker environment"]
+  config.vm.define "dockerhost" do |dockerhost|
+    dockerhost.vm.box = "centos/7"
+    #config.vm.box = "alpine/alpine64"
+    dockerhost.vm.hostname = HOST_NAME
+    #dockerhost.vm.hostname = "jenkins"
+    dockerhost.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      #vb.name = HOSTNAME
+      vb.memory = 2048
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "docker environment"]
+     end
+
+    dockerhost.vm.network "private_network", ip: "192.168.1.200"
+    dockerhost.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
+    # Docker API
+    dockerhost.vm.network "forwarded_port", guest: 4243, host: 4243
+    # Docker API
+    dockerhost.vm.network "forwarded_port", guest: 5000, host: 5000
+    # jenkins
+    dockerhost.vm.network "forwarded_port", guest: 8080, host: 48080
+    dockerhost.vm.network "forwarded_port", guest: 443, host: 40443
+
+    dockerhost.vm.provision "shell", inline: <<-SHELL
+       cd /vagrant
+          chmod +x *.sh
+        ls -al
+        sh setup.sh
+    SHELL
   end
 
-  config.vm.network "private_network", ip: "192.168.1.200"
-  config.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
-  # Docker API
-  #config.vm.network "forwarded_port", guest: 4243, host: 4243
-  # jenkins
-  #config.vm.network "forwarded_port", guest: 8080, host: 48080
-  #config.vm.network "forwarded_port", guest: 443, host: 40443
-
-  config.vm.provision "shell", inline: <<-SHELL
-      cd /vagrant
-      chmod +x *.sh
-      ls -al
-      sh setup.sh
-  SHELL
-
-#  config.vm.provision "ansible" do |ansible|
+#  dockerhost.vm.provision "ansible" do |ansible|
 #    ansible.compatibility_mode = "2.0"
 #    ansible.playbook = "provisioning/main.yml"
 #  end
