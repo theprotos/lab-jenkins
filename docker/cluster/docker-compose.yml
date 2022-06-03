@@ -21,10 +21,10 @@ services:
     restart: always
     depends_on:
       - docker-registry
-    command: >
-      /bin/bash -c "
-    [[ $$(curl 0.0.0.0:5000/v2/_catalog | jq ".repositories" | wc -l) -ge 6 ]]
-    "
+    #command: >
+    #  /bin/bash -c "
+    #[[ $$(curl 0.0.0.0:5000/v2/_catalog | jq \".repositories\" | wc -l) -ge 6 ]]
+    #"
 
   docker-registry:
     image: registry:2

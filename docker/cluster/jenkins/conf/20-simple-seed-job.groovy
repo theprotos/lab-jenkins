@@ -32,6 +32,7 @@ jobDslBuildStep.with {
     removedConfigFilesAction = RemovedConfigFilesAction.DELETE
     useScriptText = true
     scriptText = "job('DSL-Tutorial-1-Test') {\n" +
+            "    description('My first job') \n" +
             "    scm {\n" +
             "        git('git://github.com/quidryan/aws-sdk-test.git')\n" +
             "    }\n" +

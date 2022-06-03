@@ -2,6 +2,7 @@
 ```
 docker build - < Dockerfile
 docker exec -it jenkins bash
+docker logs jenkins
 ```
 
 

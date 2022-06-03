@@ -1,6 +1,8 @@
+#Jenkins config
+job-dsl
 configuration-as-code:latest
 git:latest
-script-security:latest
+#script-security:latest
 mailer:latest
 credentials:latest
 ssh-credentials:latest
@@ -8,19 +10,19 @@ scm-api:latest
 junit:latest
 matrix-project:latest
 matrix-auth:latest
-blueocean:latest
 #cloudbees-folder:6.16
 workflow-aggregator:latest
 #workflow-multibranch:2.26
 #workflow-aggregator:2.6
 #timestamper:1.13
-docker-plugin
 gradle
 copyartifact
-job-dsl
 promoted-builds
 #nexus-jenkins-plugin
-docker-workflow
-# SSH agents
+#agents
 ssh-slaves
+docker-plugin
+docker-workflow
+#visual
 dashboard-view
+blueocean:latest

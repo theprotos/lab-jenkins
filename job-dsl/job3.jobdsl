@@ -14,4 +14,4 @@ multibranchPipelineJob('multibranch') {
             numToKeep(20)
         }
     }
-}
+}https://github.com/jenkins-docs/simple-java-maven-app.git

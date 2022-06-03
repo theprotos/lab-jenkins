@@ -32,3 +32,7 @@ ssh-keygen -f ./jenkins -t rsa -C "" -N ""
 docker inspect <container>
 ssh jenkins@172.17.0.5 -i /vagrant/cluster/jenkins/.ssh/jenkins -vvv
 172.17.0.3
+
+
+
+https://carolinafernandez.github.io/deployment/2019/08/22/Handling-dependencies-in-Docker-compose
