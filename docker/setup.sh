@@ -17,6 +17,9 @@ echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Install docker"
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 yum install -y -q docker-ce docker-ce-cli containerd.io
 
+echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Clean packages"
+yum clean all
+
 echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Install docker-compose"
 curl -sL "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)"\
  -o /usr/bin/docker-compose && chmod +x /usr/bin/docker-compose
@@ -36,3 +39,5 @@ echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: Start compose"
 cd /vagrant/cluster
 chmod +x *.sh
 sh 01-start-cluster.sh
+
+echo -e "\n  [$(date +'%Y-%m-%dT%H:%M:%S%z')]: COMPLETED"

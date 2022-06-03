@@ -1,3 +1,5 @@
 FROM jenkins/inbound-agent:latest-alpine-jdk11
 USER root
-RUN apk -q update && apk -q add maven gradle npm git
+RUN apk -q update &&\
+    apk -q add maven gradle npm git &&\
+    apk cache sync

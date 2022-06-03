@@ -15,7 +15,7 @@ This folder contains the dockerized environment.
 ./node1-shell.sh [node_name]
 ```
 
-docker exec -it jenkins bash
+
 
 
 

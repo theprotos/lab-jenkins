@@ -4,4 +4,4 @@ venv
 .vscode
 *.iml
 .vagrant*
-.secrets
+vm/.secrets

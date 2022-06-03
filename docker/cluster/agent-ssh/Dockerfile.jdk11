@@ -1,4 +1,4 @@
-FROM jenkins/ssh-agent:latest
+FROM jenkins/ssh-agent:latest-jdk11
 USER root
 RUN apt-get update -y -q &&\
     apt-get install -y -q  maven gradle npm &&\

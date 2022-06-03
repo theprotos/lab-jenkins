@@ -1,0 +1,8 @@
+FROM jenkins/inbound-agent:latest-jdk11
+USER root
+RUN apt-get update -y -q &&\
+    apt-get install -y -q maven gradle npm &&\
+    apt-get autoremove -y -q &&\
+    apt-get clean -y -q
+
+#apt-get upgrade -y -q &&\

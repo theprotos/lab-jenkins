@@ -7,3 +7,6 @@ docker exec -it 75b7a47e1e67 bash
 
 sed -i 's/[#]?ClientAliveInterval.*/ClientAliveInterval 1200/' /etc/ssh/sshd_config
 sed -i 's/[#]?ClientAliveCountMax.*/ClientAliveCountMax 3/' /etc/ssh/sshd_config
+
+
+docker build - < Dockerfile.alpine

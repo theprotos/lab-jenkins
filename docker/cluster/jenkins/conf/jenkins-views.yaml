@@ -1,0 +1,25 @@
+views:
+viewsTabBar: "standard"
+
+- dashboard:
+    name: "mystats"
+    columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "favoriteColumn"
+    includeRegex: "(?!testtestetestes.*).*"
+    leftPortlets:
+      - statBuilds:
+          name: "Build statistics"
+
+      rightPortlets:
+        - statJobs:
+            name: "Job statistics"
+      topPortlets:
+        - statSlaves:
+            name: "Agent statistics"

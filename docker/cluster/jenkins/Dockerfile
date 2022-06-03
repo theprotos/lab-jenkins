@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins:lts-jdk11
 
 USER jenkins
 COPY conf/plugins.txt /usr/share/jenkins/ref/plugins.txt
@@ -11,5 +11,9 @@ RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
 USER root
 RUN chmod 600 /var/jenkins_home/.ssh/*
 
-ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false -Djava.awt.headless -Dhudson.remoting.ClassFilter=javaposse.jobdsl.plugin.*"
+ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false\
+ -Djava.awt.headless\
+ -Dhudson.remoting.ClassFilter=javaposse.jobdsl.plugin.*\
+ -Dcom.cloudbees.opscenter.client.cloud.CloudImpl.retentionStrategyShotCount=-1"
+
 ENV CASC_JENKINS_CONFIG=/var/jenkins_home/jcasc
