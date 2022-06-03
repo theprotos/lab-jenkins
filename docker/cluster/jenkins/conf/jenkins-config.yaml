@@ -46,7 +46,7 @@ jenkins:
       - "USER:View/Create:admin"
       - "USER:View/Delete:admin"
       - "USER:View/Read:admin"
-      - "Overall/Read:authenticated"
+      - "GROUP:Overall/Read:authenticated"
       - "USER:Run/Delete:dev"
       - "USER:Run/Replay:dev"
       - "USER:Run/Update:dev"

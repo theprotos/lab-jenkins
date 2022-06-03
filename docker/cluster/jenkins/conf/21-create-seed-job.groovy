@@ -19,7 +19,7 @@ def folder = jenkinsInstance.getItem("SeedJobs")
 def now = new Date()
 def jobScriptsRepository = "https://github.com/theprotos/lab-jenkins.git"
 def branch = "*/development"
-def jobsScriptFile = "jenkins/job-dsl/*.jobdsl"
+def jobsScriptFile = "job-dsl/*.jobdsl"
 def scm = new GitSCM(GitSCM.createRepoList(jobScriptsRepository, ""), [new BranchSpec(branch)], false, [], null, null, [])
 def advancedJobName = "AdvancedSeedJob"
 println("\n=== Create job: " + folder.name + "/" + advancedJobName + "\n")
