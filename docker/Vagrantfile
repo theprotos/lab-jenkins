@@ -13,10 +13,10 @@ if Vagrant.has_plugin?("vagrant-vbguest")
 end
 
   config.vm.define "dockerhost" do |dockerhost|
-    dockerhost.vm.box = "centos/7"
-    #config.vm.box = "alpine/alpine64"
-    dockerhost.vm.hostname = HOST_NAME
-    #dockerhost.vm.hostname = "jenkins"
+    dockerhost.vm.box = "ubuntu/jammy64"
+    #dockerhost.vm.box = "centos/stream8"
+    #dockerhost.vm.hostname = HOST_NAME
+    dockerhost.vm.hostname = "jenkins-docker"
     dockerhost.vm.provider :virtualbox do |vb|
       #vb.gui = true
       #vb.name = HOSTNAME
@@ -42,7 +42,7 @@ end
        cd /vagrant
           chmod +x *.sh
         ls -al
-        sh setup.sh
+        sh setup-ubuntu.sh
     SHELL
   end
 

@@ -1,10 +1,9 @@
 jenkins:
 
   myViewsTabBar: "standard"
-    numExecutors: 0
-    primaryView:
-      all:
-        name: "all"
+  primaryView:
+    all:
+      name: "all"
 
   viewsTabBar: "standard"
   views:
@@ -46,4 +45,3 @@ jenkins:
       - "buildButton"
       - "favoriteColumn"
       name: "dashboard"
-  viewsTabBar: "standard"

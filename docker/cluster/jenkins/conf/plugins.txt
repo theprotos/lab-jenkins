@@ -1,10 +1,10 @@
 #Jenkins config
-job-dsl
+job-dsl:latest
 configuration-as-code:latest
 git:latest
 #script-security:latest
 mailer:latest
-credentials:latest
+credentials
 ssh-credentials:latest
 scm-api:latest
 junit:latest

@@ -1,15 +1,15 @@
 FROM jenkins/ssh-agent:latest
 USER root
 RUN apt-get update -y -q &&\
-    apt-get remove docker docker-engine docker.io containerd runc &&\
     apt-get install -y -q  maven gradle npm ca-certificates curl gnupg lsb-release &&\
     mkdir -p /etc/apt/keyrings &&\
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg &&\
+    curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg &&\
     echo \
-      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-      $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null &&\
+      "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+      $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null &&\
     apt-get update -y -q &&\
-    sudo apt-get -y -q install docker-ce docker-ce-cli containerd.io docker-compose-plugin &&\
+    apt-get -y -q install docker-ce docker-ce-cli containerd.io docker-compose-plugin &&\
+    systemctl enable docker &&\
     apt-get autoremove -y -q &&\
     apt-get clean -y -q &&\
     sed -i 's/[#]?ClientAliveInterval.*/ClientAliveInterval 1200/' /etc/ssh/sshd_config &&\

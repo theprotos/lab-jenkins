@@ -14,18 +14,14 @@ jenkins:
   labelString: "thisissecuritylabelsforcontroller"
 
   authorizationStrategy:
-  #  globalMatrix:
-  #    permissions:
-  #      - "Overall/Administer:admin"
-  #      - "Overall/Read:authenticated"
     projectMatrix:
       permissions:
-      - "Agent/Build:admin"
-      - "Agent/Configure:admin"
-      - "Agent/Connect:admin"
-      - "Agent/Create:admin"
-      - "Agent/Delete:admin"
-      - "Agent/Disconnect:admin"
+      - "USER:Agent/Build:admin"
+      - "USER:Agent/Configure:admin"
+      - "USER:Agent/Connect:admin"
+      - "USER:Agent/Create:admin"
+      - "USER:Agent/Delete:admin"
+      - "USER:Agent/Disconnect:admin"
       - "Credentials/ManageDomains:admin"
       - "Credentials/Update:admin"
       - "Credentials/View:admin"
