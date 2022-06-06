@@ -20,7 +20,7 @@ end
     dockerhost.vm.provider :virtualbox do |vb|
       #vb.gui = true
       #vb.name = HOSTNAME
-      vb.memory = 2048
+      vb.memory = 4*1024
       vb.cpus = 2
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
