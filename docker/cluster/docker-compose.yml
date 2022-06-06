@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+
+  jenkins:
+    build:
+      context: ./jenkins
+      dockerfile: Dockerfile
+    image: myjenkins
+    container_name: jenkins
+    deploy:
+      replicas: 1
+    ports:
+      - '8080:8080'
+      - '443:8443'
+      - '50000:50000'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      MY_VAR: myvar
+    restart: always
+    depends_on:
+      - docker-registry
+    #command: >
+    #  /bin/bash -c "
+    #[[ $$(curl 0.0.0.0:5000/v2/_catalog | jq \".repositories\" | wc -l) -ge 6 ]]
+    #"
+
+  docker-registry:
+    image: registry:2
+    container_name: docker-registry
+    deploy:
+      replicas: 1
+    ports:
+      - '5000:5000'
+    restart: always

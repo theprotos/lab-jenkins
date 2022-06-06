@@ -1,0 +1,47 @@
+jenkins:
+
+  myViewsTabBar: "standard"
+  primaryView:
+    all:
+      name: "all"
+
+  viewsTabBar: "standard"
+  views:
+
+  - all:
+      name: "all"
+
+  - dashboard:
+      name: "mystats"
+      columns:
+        - "status"
+        - "weather"
+        - "jobName"
+        - "lastSuccess"
+        - "lastFailure"
+        - "lastDuration"
+        - "buildButton"
+        - "favoriteColumn"
+      includeRegex: "(?!testtestetestes.*).*"
+      leftPortlets:
+        - statBuilds:
+            name: "Build statistics"
+
+      rightPortlets:
+        - statJobs:
+            name: "Job statistics"
+      topPortlets:
+        - statSlaves:
+            name: "Agent statistics"
+
+  - dashboard:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "favoriteColumn"
+      name: "dashboard"

@@ -1,0 +1,24 @@
+pipelineJob('gradle-pipeline-example') {
+
+  def repo = 'https://github.com/Aunsiels/jenkins-gradle-example.git'
+
+  triggers {
+    githubPush()
+    cron("H/5 * * * *")
+  }
+  definition {
+    cpsScm {
+      lightweight()
+      scm {
+        git {
+          remote {
+            url(repo)
+          }
+          branch('*/master')
+          //branches('master', '**/feature*')
+          scriptPath('jenkins/Jenkinsfile')
+        }
+      }
+    }
+  }
+}

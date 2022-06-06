@@ -1,0 +1,47 @@
+configuration-as-code:latest
+job-dsl:latest
+git:latest
+blueocean
+script-security
+mailer
+#credentials
+ssh-credentials
+scm-api
+junit
+matrix-project #:1.19
+matrix-auth #:2.6.8
+##cloudbees-folder:6.16
+workflow-aggregator #:2.6
+##workflow-multibranch:2.26
+##workflow-aggregator:2.6
+##timestamper:1.13
+docker-plugin
+gradle
+copyartifact
+promoted-builds
+##nexus-jenkins-plugin
+docker-workflow
+# SSH agents
+ssh-slaves
+dashboard-view
+######
+ant:latest
+antisamy-markup-formatter:latest
+build-timeout:latest
+cloudbees-folder:latest
+configuration-as-code:latest
+credentials-binding:latest
+email-ext:latest
+git:latest
+github-branch-source:latest
+gradle:latest
+ldap:latest
+mailer:latest
+matrix-auth:latest
+pam-auth:latest
+pipeline-github-lib:latest
+pipeline-stage-view:latest
+ssh-slaves:latest
+timestamper:latest
+workflow-aggregator:latest
+ws-cleanup:latest
