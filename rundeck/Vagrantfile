@@ -1,0 +1,55 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# vagrant rsync-auto
+
+VAGRANTFILE_API_VERSION = "2"
+HOST_NAME = "docker"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+if Vagrant.has_plugin?("vagrant-vbguest")
+  config.vbguest.auto_update = false
+end
+
+  config.vm.define "dockerhost" do |dockerhost|
+    dockerhost.vm.box = "ubuntu/jammy64"
+    #dockerhost.vm.box = "centos/8"
+    #dockerhost.vm.box = "centos/stream8"
+    #dockerhost.vm.box = "generic/alpine316"
+    #dockerhost.vm.hostname = HOST_NAME
+    dockerhost.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      vb.name = HOST_NAME
+      vb.memory = 2048
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "docker environment"]
+     end
+
+    dockerhost.vm.network "private_network", ip: "192.168.1.100"
+    dockerhost.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
+    # Rest API
+    dockerhost.vm.network "forwarded_port", guest: 4440, host: 14440
+
+    dockerhost.vm.provision "shell", inline: <<-SHELL
+       cd /vagrant/vagrant-scripts
+          chmod +x *.sh
+        ls -al
+        cat /etc/os-release
+        #sh bootstrap-alpine.sh
+        #sh bootstrap-centos.sh
+        sh bootstrap-ubuntu.sh
+        docker-compose -f ../docker-compose.yml up --build -d
+    SHELL
+  end
+
+#  dockerhost.vm.provision "ansible" do |ansible|
+#    ansible.compatibility_mode = "2.0"
+#    ansible.playbook = "provisioning/main.yml"
+#  end
+
+end

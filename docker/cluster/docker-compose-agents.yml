@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+
+  agent-jnlp-dind:
+    build:
+      context: ./agent-jnlp
+      dockerfile: Dockerfile.dind
+    image: 192.168.1.200:5000/jnlp-linux-dind
+    container_name: agent-jnlp-dind
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      MY_VAR: myvar
+
+  agent-ssh-dind:
+    build:
+      context: ./agent-ssh
+      dockerfile: Dockerfile.dind
+    image: 192.168.1.200:5000/ssh-linux-dind
+    container_name: agent-ssh-dind
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      JENKINS_AGENT_SSH_PUBKEY: "${JENKINS_PUB_KEY}"
+
+  agent-jnlp-jdk8:
+    build:
+      context: ./agent-jnlp
+      dockerfile: Dockerfile.jdk8
+    image: 192.168.1.200:5000/jnlp-linux-jdk8
+    container_name: agent-jnlp-jdk8
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      MY_VAR: myvar
+
+  agent-jnlp-jdk11:
+    build:
+      context: ./agent-jnlp
+      dockerfile: Dockerfile.jdk11
+    image: 192.168.1.200:5000/jnlp-linux-jdk11
+    container_name: agent-jnlp-jdk11
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      MY_VAR: myvar
+
+  agent-ssh-linux-jdk8:
+    build:
+      context: ./agent-ssh
+      dockerfile: Dockerfile.jdk8
+    image: 192.168.1.200:5000/ssh-linux-jdk8
+    container_name: agent-ssh-linux-jdk8
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      JENKINS_AGENT_SSH_PUBKEY: "${JENKINS_PUB_KEY}"
+
+  agent-ssh-linux-jdk11:
+    build:
+      context: ./agent-ssh
+      dockerfile: Dockerfile.jdk11
+    image: 192.168.1.200:5000/ssh-linux-jdk11
+    container_name: agent-ssh-linux-jdk11
+    deploy:
+      replicas: 0
+    ports:
+      - '8022:22'
+    volumes:
+      - /var/jenkins_home
+    environment:
+      JENKINS_AGENT_SSH_PUBKEY: "${JENKINS_PUB_KEY}"

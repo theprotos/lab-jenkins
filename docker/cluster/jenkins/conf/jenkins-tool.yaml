@@ -1,0 +1,20 @@
+tool:
+  git:
+    installations:
+      - name: "git"
+        home: "/usr/bin/git"
+  jdk:
+    installations:
+      - home: "/opt/java/openjdk"
+        name: "jdk"
+  maven:
+    installations:
+      - home: "/usr/bin/maven"
+        name: "maven"
+  gradle:
+     installations:
+       - name: "gradle"
+         home: "/usr/bin/gradle"
+  mavenGlobalConfig:
+    globalSettingsProvider: "standard"
+    settingsProvider: "standard"

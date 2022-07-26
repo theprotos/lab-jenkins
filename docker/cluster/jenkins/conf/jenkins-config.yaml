@@ -1,0 +1,128 @@
+jenkins:
+  systemMessage: |
+    Welcome to our build server.
+
+    This Jenkins is 100% configured and managed 'as code'.
+    Config is now mostly handled by the 'Jenkins Configuration as Code' (JCasC) plugin.
+
+    Some settings are still injected from init.groovy.d scripts,
+    but these settings will be ported over to JCasC as support becomes available.
+
+  numExecutors: 0
+  scmCheckoutRetryCount: 2
+  mode: NORMAL
+  labelString: "thisissecuritylabelsforcontroller"
+
+  authorizationStrategy:
+    projectMatrix:
+      permissions:
+      - "USER:Agent/Build:admin"
+      - "USER:Agent/Configure:admin"
+      - "USER:Agent/Connect:admin"
+      - "USER:Agent/Create:admin"
+      - "USER:Agent/Delete:admin"
+      - "USER:Agent/Disconnect:admin"
+      - "USER:Credentials/Create:admin"
+      - "USER:Credentials/Delete:admin"
+      - "USER:Credentials/ManageDomains:admin"
+      - "USER:Credentials/Update:admin"
+      - "USER:Credentials/View:admin"
+      - "USER:Job/Build:admin"
+      - "USER:Job/Cancel:admin"
+      - "USER:Job/Configure:admin"
+      - "USER:Job/Create:admin"
+      - "USER:Job/Delete:admin"
+      - "USER:Job/Discover:admin"
+      - "USER:Job/Move:admin"
+      - "USER:Job/Read:admin"
+      - "USER:Job/Workspace:admin"
+      - "USER:Overall/Administer:admin"
+      - "USER:Overall/Read:admin"
+      - "USER:Run/Delete:admin"
+      - "USER:Run/Replay:admin"
+      - "USER:Run/Update:admin"
+      - "USER:SCM/Tag:admin"
+      - "USER:View/Configure:admin"
+      - "USER:View/Create:admin"
+      - "USER:View/Delete:admin"
+      - "USER:View/Read:admin"
+      - "GROUP:Overall/Read:authenticated"
+      - "USER:Run/Delete:dev"
+      - "USER:Run/Replay:dev"
+      - "USER:Run/Update:dev"
+
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+        - id: "admin"
+          password: "admin"
+        - id: "dev"
+          password: "dev"
+        - id: "james"
+          password: "james"
+        - id: "diane"
+          password: "diane"
+        - id: "laura"
+          password: "laura"
+
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: FOO
+            value: BAR
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+        - usernamePassword:
+            id: "exampleuser-creds-id"
+            username: "user"
+            password: "password"
+            description: "Sample credentials of exampleuser"
+            scope: GLOBAL
+        - usernamePassword:
+            id: "exampleuser-creds-id"
+            username: "user"
+            password: "password"
+            description: "Sample credentials of exampleuser"
+            scope: GLOBAL
+        - usernamePassword:
+            description: "vagrant-password"
+            id: "vagrant-node-password"
+            password: "vagrant"
+            scope: GLOBAL
+            username: "vagrant"
+        - string:
+            description: "Github key"
+            id: "github-key"
+            scope: GLOBAL
+            secret: "{AQAAABAAAAAwaWLdmwBk0xm0AsA6jjtMCq5KpnzaaflhOkKZA+sbc7Jjpt+yKy1JNXlyU5om8p/sxzrCOG50KTpT5OYORf/oyg==}"
+
+unclassified:
+  location:
+    adminAddress: vlcz@seznam.cz
+    url: http://192.168.1.200:8080/
+
+  mailer:
+    charset: UTF-8
+    useSsl: false
+    useTls: false
+
+  pollSCM:
+    pollingThreadCount: 10
+
+  pipeline-model-docker:
+    dockerLabel: "docker"
+
+  gitHubPluginConfig:
+    configs:
+    - credentialsId: "github_key"
+      name: "github"
+      manageHooks: true
+
+security:
+  globaljobdslsecurityconfiguration:
+    useScriptSecurity: false

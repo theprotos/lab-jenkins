@@ -1,0 +1,21 @@
+FROM jenkins/inbound-agent:alpine as jnlp
+FROM docker:dind
+
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=1000
+ARG gid=1000
+ARG JENKINS_AGENT_HOME=/home/${user}
+
+#USER root
+RUN apk -U -q add openjdk8-jre git \
+    && addgroup -g "${gid}" "${group}" \
+# Set the home directory (h), set user and group id (u, G), set the shell, don't ask for password (D)
+    && adduser -h "${JENKINS_AGENT_HOME}" -u "${uid}" -G "${group}" -s /bin/bash -D "${user}" \
+# Unblock user
+    && passwd -u "${user}"
+
+COPY --from=jnlp /usr/local/bin/jenkins-agent /usr/local/bin/jenkins-agent
+COPY --from=jnlp /usr/share/jenkins/agent.jar /usr/share/jenkins/agent.jar
+
+ENTRYPOINT ["/usr/local/bin/jenkins-agent"]

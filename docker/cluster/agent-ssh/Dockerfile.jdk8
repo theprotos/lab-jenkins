@@ -1,0 +1,14 @@
+FROM jenkins/ssh-agent:latest
+USER root
+RUN apt-get update -y -qq &&\
+    apt-get install -y -qq git maven gradle npm curl &&\
+    (curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash) &&\
+    sed -i /etc/ssh/sshd_config \
+            -e 's/#ClientAliveInterval.*/ClientAliveInterval 1200/' \
+            -e 's/#ClientAliveCountMax.*/ClientAliveCountMax 3/' \
+        && mkdir -p /var/run/sshd &&\
+    apt-get autoremove -y -q &&\
+    apt-get clean -y -q
+
+
+#apt-get upgrade -y -q &&\

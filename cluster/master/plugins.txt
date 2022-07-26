@@ -1,5 +1,0 @@
-configuration-as-code
-git
-greenballs
-matrix-project
-mailer

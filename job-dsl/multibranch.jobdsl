@@ -1,0 +1,17 @@
+multibranchPipelineJob('multibranch-train') {
+    triggers {
+        cron("H/10 * * * *")
+    }
+    branchSources {
+        git {
+            id('123456789') // IMPORTANT: use a constant and unique identifier
+            remote('https://github.com/theprotos/cicd-pipeline-train-schedule-dockerdeploy.git')
+            credentialsId('')
+        }
+    }
+    orphanedItemStrategy {
+        discardOldItems {
+            numToKeep(20)
+        }
+    }
+}

@@ -1,0 +1,10 @@
+FROM jenkins/inbound-agent:latest-jdk11
+USER root
+RUN apt-get update -y -qq &&\
+    apt-get install -y -qq git maven gradle npm curl &&\
+    (curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash) &&\
+    apt-get autoremove -y -q &&\
+    apt-get clean -y -q
+
+
+#apt-get upgrade -y -q &&\

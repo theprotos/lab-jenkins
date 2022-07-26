@@ -1,0 +1,175 @@
+jenkins:
+
+  agentProtocols:
+    - "JNLP4-connect"
+    - "Ping"
+  slaveAgentPort: 50000
+
+  nodes:
+    - permanent:
+        name: "dhost"
+        labelString: "docker"
+        mode: NORMAL
+        numExecutors: 2
+        remoteFS: "/home/jenkins"
+        launcher:
+          ssh:
+            host: "192.168.1.210"
+            port: 22
+            credentialsId: vagrant-node-password
+            launchTimeoutSeconds: 180
+            maxNumRetries: 30
+            retryWaitTime: 60
+            sshHostKeyVerificationStrategy: "nonVerifyingKeyVerificationStrategy"
+
+  clouds:
+  - docker:
+      containerCap: 5
+      dockerApi:
+        connectTimeout: 60
+        dockerHost:
+          uri: "tcp://192.168.1.200:4243"
+        readTimeout: 60
+      exposeDockerHost: true
+      name: "docker"
+
+      templates:
+#      - connector:
+#          jnlp:
+#            jenkinsUrl: "http://192.168.1.200:8080"
+#            user: jenkins
+#            jnlpLauncher:
+#              workDirSettings:
+#                disabled: false
+#                failIfWorkDirIsMissing: false
+#                internalDir: "remoting"
+#        dockerTemplateBase:
+#          cpuPeriod: 0
+#          cpuQuota: 0
+#          image: "192.168.1.200:5000/jnlp-linux-dind"
+#        instanceCapStr: "1"
+#        labelString: "linux docker"
+#        name: "jnlp-linux-dind"
+#        pullStrategy: PULL_ALWAYS
+#        pullTimeout: 300
+#        remoteFs: "/home/jenkins"
+
+      - connector:
+          jnlp:
+            jenkinsUrl: "http://192.168.1.200:8080"
+            user: jenkins
+            jnlpLauncher:
+              workDirSettings:
+                disabled: false
+                failIfWorkDirIsMissing: false
+                internalDir: "remoting"
+        dockerTemplateBase:
+          cpuPeriod: 0
+          cpuQuota: 0
+          image: "192.168.1.200:5000/jnlp-linux-dind"
+        instanceCapStr: "1"
+        labelString: "docker"
+        name: "jnlp-linux-dind"
+        pullStrategy: PULL_ALWAYS
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"
+
+      - connector:
+          jnlp:
+            jenkinsUrl: "http://192.168.1.200:8080"
+            user: jenkins
+            jnlpLauncher:
+              workDirSettings:
+                disabled: false
+                failIfWorkDirIsMissing: false
+                internalDir: "remoting"
+        dockerTemplateBase:
+          cpuPeriod: 0
+          cpuQuota: 0
+          image: "192.168.1.200:5000/jnlp-linux-jdk11"
+        instanceCapStr: "1"
+        labelString: "linux jnlp jdk11"
+        name: "jnlp-linux-jdk11"
+        pullStrategy: PULL_ALWAYS
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"
+
+      - connector:
+          jnlp:
+            jenkinsUrl: "http://192.168.1.200:8080"
+            user: jenkins
+            jnlpLauncher:
+              workDirSettings:
+                disabled: false
+                failIfWorkDirIsMissing: false
+                internalDir: "remoting"
+        dockerTemplateBase:
+          cpuPeriod: 0
+          cpuQuota: 0
+          image: "192.168.1.200:5000/jnlp-linux-jdk8"
+        instanceCapStr: "1"
+        labelString: "linux jnlp jdk8"
+        name: "jnlp-linux-jdk8"
+        pullStrategy: PULL_ALWAYS
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"
+      - connector:
+          ssh:
+            sshKeyStrategy:
+              injectSSHKey:
+                user: "jenkins"
+        dockerTemplateBase:
+          cpuPeriod: 0
+          cpuQuota: 0
+          image: "192.168.1.200:5000/ssh-linux-dind"
+        instanceCapStr: "1"
+        labelString: "docker"
+        name: "ssh-linux-dind"
+        pullStrategy: PULL_ALWAYS
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"
+        nodeProperties:
+          - envVars:
+              env:
+                - key: "foo"
+                  value: "bar"
+      - connector:
+          ssh:
+            sshKeyStrategy:
+              injectSSHKey:
+                user: "jenkins"
+        dockerTemplateBase:
+          cpuPeriod: 0
+          cpuQuota: 0
+          image: "192.168.1.200:5000/ssh-linux-jdk8"
+        instanceCapStr: "1"
+        labelString: "linux maven ssh jdk8"
+        name: "ssh-linux-jdk8"
+        pullStrategy: PULL_ALWAYS
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"
+        nodeProperties:
+          - envVars:
+              env:
+              - key: "foo"
+                value: "bar"
+      - connector:
+          ssh:
+            sshKeyStrategy:
+              injectSSHKey:
+                user: "jenkins"
+        dockerTemplateBase:
+          cpuPeriod: 0
+          cpuQuota: 0
+          image: "192.168.1.200:5000/ssh-linux-jdk11"
+        instanceCapStr: "1"
+        labelString: "linux maven ssh jdk11"
+        name: "ssh-linux-jdk11"
+        pullStrategy: PULL_ALWAYS
+        pullTimeout: 300
+        remoteFs: "/home/jenkins"
+        nodeProperties:
+          - envVars:
+              env:
+                - key: "foo"
+                  value: "bar"

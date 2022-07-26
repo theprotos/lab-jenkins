@@ -1,0 +1,93 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Run from cli to have files sync:
+# vagrant rsync-auto
+
+VAGRANTFILE_API_VERSION = "2"
+HOST_NAME = "docker-jenkins"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  if Vagrant.has_plugin?("vagrant-vbguest")
+    config.vbguest.auto_update = false
+  end
+
+  #system("vagrant box update")
+  #vagrant global-status
+  #vagrant global-status --prune
+
+  config.vm.define "dockeragent" do |dockeragent|
+    dockeragent.vm.box = "ubuntu/jammy64"
+    #dockeragent.vm.box = "centos/stream8"
+    #dockeragent.vm.hostname = HOST_NAME
+    dockeragent.vm.hostname = "jenkins-docker"
+    dockeragent.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      #vb.name = HOSTNAME
+      vb.memory = 4*1024
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "docker environment"]
+     end
+
+    dockeragent.vm.network "private_network", ip: "192.168.1.210"
+    dockeragent.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
+    # Docker API
+    #dockeragent.vm.network "forwarded_port", guest: 44243, host: 4243
+    # Docker API
+    #dockeragent.vm.network "forwarded_port", guest: 5000, host: 5000
+
+    dockeragent.vm.provision "shell", inline: <<-SHELL
+       cd /vagrant
+          chmod +x *.sh
+        ls -al
+        sh setup-ubuntu-agent.sh
+    SHELL
+  end
+
+  config.vm.define "dockerhost" do |dockerhost|
+    dockerhost.vm.box = "ubuntu/jammy64"
+    #dockerhost.vm.box = "centos/stream8"
+    #dockerhost.vm.hostname = HOST_NAME
+    dockerhost.vm.hostname = "jenkins-docker"
+    dockerhost.vm.provider :virtualbox do |vb|
+      #vb.gui = true
+      #vb.name = HOSTNAME
+      vb.memory = 4*1024
+      vb.cpus = 2
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--nested-hw-virt", "on"]
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+      vb.customize ["modifyvm", :id, "--description", "docker environment"]
+     end
+
+    dockerhost.vm.network "private_network", ip: "192.168.1.200"
+    dockerhost.vm.synced_folder ".", "/vagrant", type: "rsync", create: "true"
+    # Docker API
+    dockerhost.vm.network "forwarded_port", guest: 4243, host: 4243
+    # Docker API
+    dockerhost.vm.network "forwarded_port", guest: 5000, host: 5000
+    # jenkins
+    dockerhost.vm.network "forwarded_port", guest: 8080, host: 48080
+    dockerhost.vm.network "forwarded_port", guest: 443, host: 40443
+
+    dockerhost.vm.provision "shell", inline: <<-SHELL
+       cd /vagrant
+          chmod +x *.sh
+        ls -al
+        sh setup-ubuntu.sh
+    SHELL
+  end
+
+#  dockerhost.vm.provision "ansible" do |ansible|
+#    ansible.compatibility_mode = "2.0"
+#    ansible.playbook = "provisioning/main.yml"
+#  end
+
+
+
+end
+
